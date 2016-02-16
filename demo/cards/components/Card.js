@@ -4,7 +4,7 @@ const CARD_BACK = require('./card_back.png');
 const CARD_WIDTH = 50;
 const CARD_HEIGHT = 80;
 
-class CardView extends React.Component {
+class Card extends React.Component {
 
   constructor(id) {
     this._id = id;
@@ -25,4 +25,4 @@ Card.propTypes = {
   orientation: React.PropTypes.number.isRequired
 }
 
-export default CardView;
+export default Card;
