@@ -1,6 +1,6 @@
 import AnimatorInstance from './Animator';
 
-class AnimatedValue {
+class Value {
 
   constructor(initialValue) {
     this._value = initialValue;
@@ -19,14 +19,4 @@ class AnimatedValue {
   }
 }
 
-class AnimatedValueXY {
-  constructor(initialValue) {
-    this._value = initialValue;
-  }
-
-  update(value) {
-    this._value = value;
-  }
-}
-
-export default AnimatedValue;
+export default Value;
