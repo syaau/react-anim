@@ -1,0 +1,29 @@
+{
+  "name": "react-animation",
+  "version": "1.0.0",
+  "description": "React Animation Library for the Webb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syaau/react-animation.git"
+  },
+  "author": "Ranjan Shrestha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/syaau/react-animation/issues"
+  },
+  "homepage": "https://github.com/syaau/react-animation#readme",
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "webpack": "^1.12.13"
+  },
+  "dependencies": {
+    "react": "^0.14.7"
+  }
+}
