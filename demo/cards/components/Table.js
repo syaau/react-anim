@@ -1,4 +1,8 @@
 import React from 'react';
+import ReactAnimation, { Animated } from 'react-animation';
+import Card from './Card';
+
+console.log("Animated instance is ", Animated);
 
 class Table extends React.Component {
   constructor(props) {
@@ -23,7 +27,12 @@ class Table extends React.Component {
   }
 
   componentDidMount() {
+    let { cards } = this.state;
     // This is where the animation needs to start
+    ReactAnimation.timed(
+      cards[0].x, { toValue: this._players[0].x }
+    ).start();
+    return;
     let anim = ReactAnimation.sequence();
 
     for(let i=0; i<50; ++i) {
@@ -47,15 +56,17 @@ class Table extends React.Component {
   }
 
   _renderCard(card, index) {
-    return <Card key={index} x={card.x} y={card.y} orientation={card.orientation} />;
+    return <Card key={index} x={card.x.val} y={card.y.val} orientation={card.orientation.val%360} />;
   }
 
   render() {
-    cards = this.state.cards;
+    let cards = this.state.cards;
     return (
-      <svg width="100%" height="100%">
-        {cards.map(this._renderCard.bind(this))}
-      </svg>
+      <Animated>
+        <svg width="100%" height="100%">
+          {cards.map(this._renderCard.bind(this))}
+        </svg>
+      </Animated>
     );
   }
 }

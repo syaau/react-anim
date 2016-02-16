@@ -5,11 +5,6 @@ const CARD_WIDTH = 50;
 const CARD_HEIGHT = 80;
 
 class Card extends React.Component {
-
-  constructor(id) {
-    this._id = id;
-  }
-
   render() {
     let {x, y, orientation} = this.props;
 
