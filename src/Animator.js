@@ -11,7 +11,7 @@ class Animator {
   addComponent(component) {
     this._components.push(component);
   }
-  
+
   removeComponent(component) {
     let idx = this._components.indexOf(component);
     if (idx != -1) {
@@ -28,6 +28,7 @@ class Animator {
   }
 
   removeAnimation(animation) {
+    //console.log("Remove Animation", this, animation);
     let idx = this._animations.indexOf(animation);
     if (idx != -1) {
       this._animations.splice(idx, 1);
@@ -40,12 +41,12 @@ class Animator {
 
   onUpdate() {
     let timestamp = Date.now();
-
+    //console.log("Run animation at ", timestamp, this._animations.length, this._components.length);
     // Run each animation to calculate the updated value
     this._animations.forEach( animation => { animation.updateValue(timestamp) })
 
     // This is where we can re-render the entire virtual DOM tree
-    this._components.forEach(component => { component.forceUpdate() });
+    this._components.forEach(component => { component.update() });
 
     // Request another animation frame if needed
     if (this._animations.length > 0) {

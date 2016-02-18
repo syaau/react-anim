@@ -10,6 +10,10 @@ class Animated extends React.Component {
     AnimatorInstance.removeComponent(this);
   }
 
+  update() {
+    this.props.onUpdate && this.props.onUpdate();
+  }
+
   render() {
     return React.Children.only(this.props.children);
   }

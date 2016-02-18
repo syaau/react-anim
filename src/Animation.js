@@ -27,20 +27,24 @@ class Animation {
 
   updateValue(timestamp) {
     let interval = timestamp - this._start;
-    this._value.update(
-      this._toValue.map( (finalValue, index) => {
+    //console.log(interval, this._duration);
+    if (this._toValue.constructor === Array) {
+      this._value.update(
+        this._toValue.map( (finalValue, index) =>
+          this._algorithm(this._startValue[index], finalValue, interval, this._duration)
+        )
+      );
+    } else {
+      this._value.update(
         this._algorithm(this._startValue, this._toValue, interval, this._duration)
-      })
-    );
+      );
+    }
 
     if (interval >= this._duration) {
-      finish();
+      this.finish();
     }
   }
 
-  calcValue(startValue, toValue, interval, duration) {
-    console.error("Override this method to update the animated value");
-  }
 }
 
 export default Animation;
