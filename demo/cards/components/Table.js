@@ -11,14 +11,12 @@ class Table extends React.Component {
     let cards = [];
     for(let i=0; i<52; ++i) {
       cards.push({
-        x: new ReactAnimation.Value(0),
-        y: new ReactAnimation.Value(0),
-        orientation: new ReactAnimation.Value(0)
+        xyr: new ReactAnimation.Value([0, 0, 0]),
       });
     }
 
     this._players = [
-      { x: 200, y: 50 }, { x: 180, y: 100 }, { x: 150, y: 150 }, { x: 100, y: 180 }, { x: 50, y: 200 }
+      { x: 200, y: 0 }, { x: 180, y: 100 }, { x: 100, y: 180 }, { x: 0, y: 200 }
     ];
 
     this.state = {
@@ -29,41 +27,43 @@ class Table extends React.Component {
   componentDidMount() {
     let { cards } = this.state;
     // This is where the animation needs to start
-    ReactAnimation.timed(
-      cards[0].x, { toValue: this._players[0].x }
-    ).start();
-    return;
-    let anim = ReactAnimation.sequence();
+    // ReactAnimation.timed(
+    //   cards[0].x, { toValue: this._players[0].x }
+    // ).start();
+    // return;
+    let anim = ReactAnimation.parallel();
 
-    for(let i=0; i<50; ++i) {
+    let delay = 0;
+    for(let i=0; i<52; ++i) {
 
-      let player = i % this._players.length;
+      let player = this._players[i % this._players.length];
 
-      anim.push(new ReactAnimation.timed(
-        cards[i].x, { toValue: player.x }
-      ));
-
-      anim.push(new ReactAnimation.timed(
-        cards[i].y, { toValue: player.y }
-      ));
-
-      anim.push(new ReactAnimation.timed(
-        cards[i].orientation, { toValue: Math.random() * 3000 }
-      ));
+      anim.push(ReactAnimation.delayed(delay, ReactAnimation.timed(
+        cards[i].xyr, { toValue: [player.x, player.y, Math.random() * 3000], delay: 100 }
+      )));
+      delay += 50;
     }
 
     anim.start();
   }
 
   _renderCard(card, index) {
-    return <Card key={index} x={card.x.val} y={card.y.val} orientation={card.orientation.val%360} />;
+    //console.log("RenderCard ", card);
+    //console.log("Render Card", index, card.xyr.val);
+    return <Card key={index} x={card.xyr.val[0]} y={card.xyr.val[1]} orientation={card.xyr.val[2]%360} />;
+  }
+
+  _refresh() {
+    this.setState({
+      cards: this.state.cards
+    });
   }
 
   render() {
     let cards = this.state.cards;
     return (
-      <Animated>
-        <svg width="100%" height="100%">
+      <Animated onUpdate={this._refresh.bind(this)}>
+        <svg width="400px" height="400px">
           {cards.map(this._renderCard.bind(this))}
         </svg>
       </Animated>
