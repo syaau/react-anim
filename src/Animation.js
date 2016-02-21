@@ -14,7 +14,7 @@ class Animation {
 
   start(finishCallback) {
     this._start = Date.now();
-    this._startValue = this._value.val;
+    this._startValue = this._value.constructor === Array ? this._value.map(v => v.val) : this._value.val;
     this._finishCallback = finishCallback;
 
     AnimatorInstance.addAnimation(this);
@@ -25,22 +25,24 @@ class Animation {
     this._finishCallback && this._finishCallback();
   }
 
-  updateValue(timestamp) {
+  updateValue(frame, timestamp) {
     let interval = timestamp - this._start;
     //console.log(interval, this._duration);
 
     if (interval >= this._duration) {
-      this._value.update(this._toValue);
+      if (this._value.constructor === Array) {
+        this._value.forEach( (value, index) => value.update(frame, this._toValue[index]))
+      } else {
+        this._value.update(frame, this._toValue);
+      }
       this.finish();
     } else {
       if (this._toValue.constructor === Array) {
-        this._value.update(
-          this._toValue.map( (finalValue, index) =>
-            this._algorithm(this._startValue[index], finalValue, interval, this._duration)
-          )
-        );
+        this._value.forEach( (value, index) => {
+          value.update(frame, this._algorithm(this._startValue[index], this._toValue[index], interval, this._duration))
+        })
       } else {
-        this._value.update(
+        this._value.update(frame,
           this._algorithm(this._startValue, this._toValue, interval, this._duration)
         );
       }

@@ -2,6 +2,17 @@
  * An animator is responsible for managing all the animations within
  * the scope of the react.
  */
+
+class AnimationFrame {
+  constructor() {
+    this._animated = [];
+  }
+
+  mark(animated) {
+    this._animated.push(animated);
+  }
+}
+
 class Animator {
   constructor() {
     this._animations = [];
@@ -39,14 +50,21 @@ class Animator {
     this._requestHandle = window.requestAnimationFrame(this.onUpdate.bind(this));
   }
 
+  mark(component) {
+
+  }
+
   onUpdate() {
     let timestamp = Date.now();
+
+    let frame = new AnimationFrame();
     //console.log("Run animation at ", timestamp, this._animations.length, this._components.length);
     // Run each animation to calculate the updated value
-    this._animations.forEach( animation => { animation.updateValue(timestamp) })
+    this._animations.forEach( animation => { animation.updateValue(frame, timestamp) })
 
+    frame._animated.forEach( (animated) => { animated.forceUpdate() });
     // This is where we can re-render the entire virtual DOM tree
-    this._components.forEach(component => { component.update() });
+    //this._components.forEach(component => { component.forceUpdate() });
 
     // Request another animation frame if needed
     if (this._animations.length > 0) {
