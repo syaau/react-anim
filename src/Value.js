@@ -4,11 +4,20 @@ class Value {
 
   constructor(initialValue) {
     this._value = initialValue;
-    this._attachedTo = null;
+    this._attachments = [];
   }
 
-  attach(animated) {
-    this._attachedTo = animated;
+  attach(owner, ref, prop, style) {
+    this._attachments.push({
+      animated: owner,
+      ref: ref,
+      prop: prop,
+      style: style
+    });
+  }
+
+  detach(animated) {
+    this._attachments = this._attachments.filter( (item) => item.animated == animated);
   }
 
   set(value) {
@@ -18,7 +27,7 @@ class Value {
   update(frame, value) {
     if (this.val != value) {
       this.val = value;
-      frame.mark(this._attachedTo);
+      this._attachments.forEach( (item) => { frame.mark(item, value) } );
     }
   }
 
