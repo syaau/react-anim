@@ -27,6 +27,7 @@ class Animator {
 
 
   addAnimation(animation) {
+    console.log("Add animation ", animation);
     // make sure this is added only once
     this._animations.push(animation);
     if (this._animations.length == 1) {
@@ -53,7 +54,9 @@ class Animator {
     let start = Date.now();
     // console.log("Run animation at ", timestamp, this._animations.length, this._components.length);
     // Run each animation to calculate the updated value
-    this._animations.forEach( animation => { animation.updateValue(frame, timestamp) })
+    // Make a copy of the animations as, the animation is removed from the updateValue call
+    let animations = this._animations.slice();
+    animations.forEach( animation => { animation.updateValue(frame, timestamp) })
 
     //console.log("Number of components to update on frame ", frame._animated.length);
 

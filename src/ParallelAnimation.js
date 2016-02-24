@@ -8,10 +8,11 @@ class ParallelAnimation {
     this._animations.push(animation);
   }
 
-  start(callback) {
+  start(timestamp, callback) {
+    timestamp = timestamp || Date.now();
     this._finishCallback = callback;
     this._running = this._animations.length;
-    this._animations.forEach( animation => { animation.start(this._onFinish.bind(this))});
+    this._animations.forEach( animation => { animation.start(timestamp, this._onFinish.bind(this))});
   }
   _onFinish() {
     this._running -= 1;

@@ -4,13 +4,13 @@ class DelayedAnimation {
     this._animation = animation;
   }
 
-  start(callback) {
+  start(timestamp, callback) {
     this._finishCallback = callback;
     this._timer = setTimeout(this._delayedStart.bind(this), this._delay);
   }
 
   _delayedStart() {
-    this._animation.start(this._onFinish.bind(this));
+    this._animation.start(Date.now(), this._onFinish.bind(this));
   }
 
   _onFinish() {
