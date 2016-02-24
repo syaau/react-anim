@@ -32,6 +32,9 @@ module.exports = {
         test: /\.png$/,
         loader: 'file'
       }
+    ],
+    postLoaders: [
+      { loader: "transform?brfs" }
     ]
   },
   resolve: {
