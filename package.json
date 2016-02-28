@@ -1,11 +1,23 @@
 {
   "name": "react-animation",
   "version": "1.0.0",
-  "description": "React Animation Library for the Webb",
-  "main": "src/index.js",
+  "description": "React Animation Library for the Web",
+  "files": [
+    "*.md",
+    "lib",
+    "es6",
+    "umd"
+  ],
+  "main": "lib/index",
+  "jsnext:main": "es6/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node demo/server.js"
+    "start": "node demo/server.js",
+    "build": "npm run build-cjs && npm run build-es6",
+    "build-cjs": "rimraf lib && babel ./src -d lib --presets es2015,stage-0,react --ignore '__tests__'",
+    "build-es6": "rimraf es6 && babel ./src -d es6 --presets es2015,stage-0,react --blacklist=es6.modules --ignore '__tests__'",
+    "build-umd": "NODE_ENV=production webpack src/index.js umd/ReactAnimation.js",
+    "build-min": "NODE_ENV=production webpack -p src/index.js umd/ReactAnimation.min.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +43,7 @@
     "fs": "0.0.2",
     "path": "^0.12.7",
     "react-canvas": "^1.1.0",
+    "rimraf": "^2.5.2",
     "style-loader": "^0.13.0",
     "transform-loader": "^0.2.3",
     "webpack": "^1.12.13",

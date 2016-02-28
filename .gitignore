@@ -3,3 +3,7 @@
 node_modules
 *.log
 
+# Ignore all the build directories
+lib/
+es6/
+umd/
