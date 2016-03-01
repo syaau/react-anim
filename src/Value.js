@@ -4,30 +4,33 @@ class Value {
 
   constructor(initialValue) {
     this._value = initialValue;
-    this._attachments = [];
+    this._components = [];
   }
 
-  attach(owner, ref, prop, style) {
-    this._attachments.push({
-      animated: owner,
-      ref: ref,
-      prop: prop,
-      style: style
-    });
+  _getComponents() {
+    return this._components;
   }
 
-  detach(animated) {
-    this._attachments = this._attachments.filter( (item) => item.animated == animated);
+  register(component) {
+    if (this._components.indexOf(component) == -1) {
+      this._components.push(component);
+    }
+  }
+
+  deregister(component) {
+    let idx = this._components.indexOf(component);
+    if (idx !== -1) {
+      this._components.splice(idx, 1);
+    }
   }
 
   set(value) {
     this._value = value;
   }
 
-  update(frame, value) {
+  update(value) {
     if (this.val != value) {
       this.val = value;
-      this._attachments.forEach( (item) => { frame.mark(item, value) } );
     }
   }
 

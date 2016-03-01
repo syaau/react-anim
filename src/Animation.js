@@ -37,11 +37,15 @@ class Animation {
     //console.log("Animation Interval " + interval + ", Duratoin: " + this._duration);
 
     if (interval >= this._duration) {
-      this._value.forEach( (value, index) => value.update(frame, this._toValue[index]))
+      this._value.forEach( (value, index) => {
+        value.update(this._toValue[index]);
+        frame.add(value)
+      });
       this.finish();
     } else {
       this._value.forEach( (value, index) => {
-        value.update(frame, this._algorithm(this._startValue[index], this._toValue[index], interval, this._duration))
+        value.update(this._algorithm(this._startValue[index], this._toValue[index], interval, this._duration));
+        frame.add(value);
       });
     }
   }

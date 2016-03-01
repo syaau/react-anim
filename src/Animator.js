@@ -7,16 +7,16 @@ import Value from './Value';
 
 class AnimationFrame {
   constructor() {
-    this._animated = [];
+    this._values = [];
+    this._animatables = [];
   }
 
-  mark(item, value) {
-    let idx = this._animated.indexOf(item.animated);
-    if (idx == -1) {
-      this._animated.push(item.animated);
-    }
-
-    item.animated.updatePropertyValue(item.ref, item.prop, item.style, value);
+  add(value) {
+    value._getComponents().forEach( component => {
+      if (this._animatables.indexOf(component) == -1) {
+        this._animatables.push(component);
+      }
+    })
   }
 }
 
@@ -43,6 +43,14 @@ class Animator {
     }
   }
 
+  register(value, animatable) {
+    value._add(animatable);
+  }
+
+  deregister(value, animatable) {
+    value._remove(animatable);
+  }
+
   requestAnimationFrame() {
     this._requestHandle = window.requestAnimationFrame(this.onUpdate.bind(this));
   }
@@ -60,7 +68,7 @@ class Animator {
 
     //console.log("Number of components to update on frame ", frame._animated.length);
 
-    frame._animated.forEach( (animated) => { this._update(animated) });
+    frame._animatables.forEach( (animatable) => { animatable.forceUpdate() });
     // This is where we can re-render the entire virtual DOM tree
     //this._components.forEach(component => { component.forceUpdate() });
     console.log("Time taken for updating animation", (Date.now() - start));
@@ -69,10 +77,6 @@ class Animator {
     if (this._animations.length > 0) {
       this.requestAnimationFrame();
     }
-  }
-
-  _update(component) {
-    component.forceUpdate();
   }
 
 }

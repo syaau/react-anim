@@ -1,12 +1,15 @@
 import React from 'react';
-import ReactAnimation, { Animated } from 'react-animation';
+import ReactAnimation, { makeAnimatable} from 'react-animation';
 
-export const SUITS = {
-   'spade': '}',
-   'diamond': '[',
-   'club': ']'
-   'heart': '{'
-}
+export const SUITS = [
+  'spade', 'diamond', 'club', 'heart'
+];
+// {
+//    'spade': '}',
+//    'diamond': '[',
+//    'club': ']',
+//    'heart': '{'
+// }
 
 export const RANKS = {
   1: 'A',
@@ -81,8 +84,8 @@ class Card extends React.Component {
 
   render() {
     let {x, y, rank, suite, orientation, ...other} = this.props;
-    x = this.state.x;
-    y = this.state.y;
+    // x = this.state.x;
+    // y = this.state.y;
     let file = rank + "_" + suite;
     //console.log("Rendering " + file + " at " + x + "," + y);
     return <image
@@ -97,4 +100,4 @@ Card.propTypes = {
 //  orientation: React.PropTypes.oneOf([React.PropTypes.number, React.PropTypes.instanceOf(ReactAnimation.Value)]).isRequired,
 }
 
-export default Card;
+export default makeAnimatable(Card);

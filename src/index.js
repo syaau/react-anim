@@ -1,9 +1,9 @@
 import Value from './Value';
 import Animation from './Animation';
-import Animated from './Animated';
 import SequencedAnimation from './SequencedAnimation';
 import ParallelAnimation from './ParallelAnimation';
 import DelayedAnimation from './DelayedAnimation';
+import { makeAnimatable } from './Animatable';
 
 function timed(value, config) {
   return new Animation(value, config);
@@ -22,20 +22,8 @@ function delayed(delay, animation) {
 }
 
 const ReactAnimation = {
-  Value: Value,
-
-  Animation: Animation,
-
-  Animated: Animated,
-
-  timed: timed,
-
-  sequence: sequence,
-
-  parallel: parallel,
-
-  delayed: delayed,
+  Value, Animation, timed, sequence, parallel, delayed, makeAnimatable
 }
 
 export default ReactAnimation;
-export { Animated }
+export { makeAnimatable };

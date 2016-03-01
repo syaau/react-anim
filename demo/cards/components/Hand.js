@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactAnimation, { Animated } from 'react-animation';
+import ReactAnimation from 'react-animation';
 import Card, { SUITS } from './Card';
 
 const CARD_COUNT = 21;
@@ -31,15 +31,15 @@ class Hand extends React.Component {
   }
 
   _startDrag(index, x, y) {
-    let card = this.refs['card' + index];
+    let card = this.state.cardPositions[index];
     this._dragging = {
       index: index,
       card: card,
-      offsetX: (card.x - x),
-      offsetY: (card.y - y)
-    }
-    //console.log(this._dragging);
-    // Let's animate the rest of the cards
+      offsetX: (card.x.val - x),
+      offsetY: (card.y.val - y)
+    };
+    // console.log(this._dragging);
+    // Lets animate the rest of the cards
     let anim = ReactAnimation.parallel();
     let idx = 0;
     for(let i=0; i<CARD_COUNT; ++i) {
@@ -62,9 +62,8 @@ class Hand extends React.Component {
     if (this._dragging) {
       let newX = this._dragging.offsetX + x;
       let newY = this._dragging.offsetY + y;
-      this._dragging.card.moveTo(
-        newX, newY
-      );
+      this._dragging.card.x.val = newX;
+      this._dragging.card.y.val = newY;
 
       // find the position within which the new card should be placed
       let newPosition = this._dragging.index;
@@ -77,8 +76,8 @@ class Hand extends React.Component {
         if (i == this._dragging.index) {
           continue;
         }
-        let card = this.refs['card' + i];
-        if (newX < card.x) {
+        let card = this.state.cardPositions[i];
+        if (newX < card.x.val) {
           newPosition = i-1;
           break;
         }
@@ -89,6 +88,8 @@ class Hand extends React.Component {
         // swap the positions
         console.log("new Position is ", newPosition);
       }
+
+      this.forceUpdate();
     }
   }
 
@@ -109,11 +110,11 @@ class Hand extends React.Component {
   render() {
     let cards = this.state.cardPositions;
     return (
-      <Animated element="svg" width="800" height="600"
+      <svg width="800" height="600"
           onMouseMove={(e) => this._continueDrag(e.clientX, e.clientY)}
           onMouseUp={(e) => this._stopDrag.bind()}>
         {cards.map(this._renderCard.bind(this))}
-      </Animated>
+      </svg>
     )
   }
 }
