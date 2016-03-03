@@ -117,3 +117,7 @@ class App extends React.Component {
 
 render(<App />, document.getElementById("stage"));
 ```
+
+### TODO
+Checkout https://github.com/chenglou/react-motion/blob/master/src/stepper.js to
+implement Spring Animation for more realistic animations.
