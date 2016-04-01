@@ -1,6 +1,6 @@
 {
-  "name": "react-animation",
-  "version": "1.0.0",
+  "name": "react-anim",
+  "version": "0.1.0",
   "description": "React Animation Library for the Web",
   "files": [
     "*.md",
@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/syaau/react-animation.git"
+    "url": "git+https://github.com/syaau/react-anim.git"
   },
   "author": "Ranjan Shrestha",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/syaau/react-animation/issues"
+    "url": "https://github.com/syaau/react-anim/issues"
   },
-  "homepage": "https://github.com/syaau/react-animation#readme",
+  "homepage": "https://github.com/syaau/react-anim#readme",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.2",
