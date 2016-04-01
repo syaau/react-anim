@@ -27,7 +27,7 @@ class Animator {
 
 
   addAnimation(animation) {
-    console.log("Add animation ", animation);
+    //console.log("Add animation ", animation);
     // make sure this is added only once
     this._animations.push(animation);
     if (this._animations.length == 1) {
@@ -71,7 +71,7 @@ class Animator {
     frame._animatables.forEach( (animatable) => { animatable.forceUpdate() });
     // This is where we can re-render the entire virtual DOM tree
     //this._components.forEach(component => { component.forceUpdate() });
-    console.log("Time taken for updating animation", (Date.now() - start));
+    //console.log("Time taken for updating animation", (Date.now() - start));
 
     // Request another animation frame if needed
     if (this._animations.length > 0) {
